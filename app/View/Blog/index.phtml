@@ -29,8 +29,8 @@
             <input type="submit" value="Удалить">
         </form>
         <?php endif;?>
-        <?php if (file_exists($message['image'])): ?>
-        <img src=<?= $message['image']; ?>>
+        <?php if ($message['image']): ?>
+        <img src="/blog/image/?filePath=<?=$message['image'];?>">
         <?php echo "<br>"; endif;?>
     </div>
 <?php endforeach; ?>

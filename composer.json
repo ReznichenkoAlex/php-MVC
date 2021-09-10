@@ -3,5 +3,8 @@
     "psr-4": {
       "App\\": "app/", "Base\\": "src/"
     }
+  },
+  "require": {
+    "ext-gd": "*"
   }
 }

@@ -106,9 +106,4 @@ class User extends AbstractController
 
         $this->redirect('/user/login');
     }
-
-    public function profileAction()
-    {
-        return $this->view->render('User/profile.phtml', ['user' => (new UserModel())->getById((int)$_GET['id'])]);
-    }
 }
