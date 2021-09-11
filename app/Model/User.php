@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use Base\AbstractModel;
-use Base\Db;
 
 class User extends AbstractModel
 {

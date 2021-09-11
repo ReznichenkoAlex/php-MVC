@@ -9,7 +9,7 @@ class View
 
     public function __construct()
     {
-        $this->templatePath = PROJECT_ROOT_DIR . DIRECTORY_SEPARATOR . 'app/View';
+        $this->templatePath = TEMPLATE_PATH;
     }
 
     public function assign(string $name, $value)
