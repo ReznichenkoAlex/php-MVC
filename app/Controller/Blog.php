@@ -13,7 +13,9 @@ class Blog extends AbstractController
             $this->redirect('/user/register');
         }
         $messages = Message::getMessages();
-        return $this->view->render('Blog/index.phtml',
+//        return $this->view->render('Blog/index.phtml',
+//            ['user' => $this->user, 'messages' => $messages, 'AdminList' => ADMIN_LIST]);
+        return $this->view->renderTwig('Blog/index.twig',
             ['user' => $this->user, 'messages' => $messages, 'AdminList' => ADMIN_LIST]);
     }
 

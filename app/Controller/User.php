@@ -34,7 +34,8 @@ class User extends AbstractController
             }
         }
 
-        return $this->view->render('User/register.phtml');
+//        return $this->view->render('User/register.phtml');
+        return $this->view->renderTwig('User/register.twig');
 
     }
 
@@ -95,7 +96,8 @@ class User extends AbstractController
             }
         }
 
-        return $this->view->render('User/register.phtml');
+//        return $this->view->render('User/register.phtml');
+        return $this->view->renderTwig('User/register.twig');
 
 
     }

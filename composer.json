@@ -5,6 +5,7 @@
     }
   },
   "require": {
-    "ext-gd": "*"
+    "ext-gd": "*",
+    "twig/twig": "^3.0"
   }
 }
