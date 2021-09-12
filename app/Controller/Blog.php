@@ -13,8 +13,6 @@ class Blog extends AbstractController
             $this->redirect('/user/register');
         }
         $messages = Message::getMessages();
-//        return $this->view->render('Blog/index.phtml',
-//            ['user' => $this->user, 'messages' => $messages, 'AdminList' => ADMIN_LIST]);
         return $this->view->renderTwig('Blog/index.twig',
             ['user' => $this->user, 'messages' => $messages, 'AdminList' => ADMIN_LIST]);
     }
@@ -30,9 +28,10 @@ class Blog extends AbstractController
             if ($_FILES['userfile']['size']) {
                 var_dump($_FILES['userfile']);
                 $fileContent = file_get_contents($_FILES['userfile']['tmp_name']);
-                $numbrer =  mt_rand(1,1000);
-                $fileLocation =  $this->user->getName() .'image' . $numbrer .  '.png';
-                file_put_contents(getcwd() . '/images/' . $this->user->getName() .'image' .$numbrer .  '.png', $fileContent);
+                $numbrer = mt_rand(1, 1000);
+                $fileLocation = $this->user->getName() . 'image' . $numbrer . '.png';
+                file_put_contents(getcwd() . '/images/' . $this->user->getName() . 'image' . $numbrer . '.png',
+                    $fileContent);
                 $message->setImage($fileLocation);
             }
 
@@ -43,11 +42,9 @@ class Blog extends AbstractController
 
     public function deletePostAction()
     {
-        if ($_REQUEST['post_id']) {
-            if (in_array($_SESSION['id'], ADMIN_LIST)) {
-                Message::deleteMessageByPostId($_REQUEST['post_id']);
-                $this->redirect('/blog/index');
-            }
+        if ($_REQUEST['post_id'] && in_array($_SESSION['id'], ADMIN_LIST)) {
+            Message::deleteMessageByPostId($_REQUEST['post_id']);
+            $this->redirect('/blog/index');
         }
     }
 
