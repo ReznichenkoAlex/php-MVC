@@ -8,7 +8,7 @@ abstract class AbstractController
 {
     /** @var View */
     protected $view;
-    /** @var User */
+    /** @var array  */
     protected $user;
 
     protected function redirect(string $url)
@@ -22,7 +22,7 @@ abstract class AbstractController
         $this->view = $view;
     }
 
-    public function setUser(User $user): void
+    public function setUser($user): void
     {
         $this->user = $user;
     }

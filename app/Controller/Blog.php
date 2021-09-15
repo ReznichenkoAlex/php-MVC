@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Message;
+use App\Model\PostEloquent as Post;
 use Base\AbstractController;
 
 class Blog extends AbstractController
@@ -12,30 +12,29 @@ class Blog extends AbstractController
         if (!$this->user) {
             $this->redirect('/user/register');
         }
-        $messages = Message::getMessages();
+        $posts = Post::query()->limit(20)->orderByDesc('id')->get()->toArray();
         return $this->view->renderTwig('Blog/index.twig',
-            ['user' => $this->user, 'messages' => $messages, 'AdminList' => ADMIN_LIST]);
+            ['user' => $this->user, 'messages' => $posts, 'AdminList' => ADMIN_LIST]);
     }
 
     public function sendPostAction()
     {
         $incomingText = isset($_POST['message']) ? htmlspecialchars($_POST['message']) : null;
         if ($incomingText) {
-            $message = (new Message())
-                ->setText($incomingText)
-                ->setUserId($this->user->getId())
-                ->setUserName($this->user->getName());
+            $post = new Post();
+            $post->text = $incomingText;
+            $post->user_id = $this->user['id'];
+            $post->user_name = $this->user['name'];
+
             if ($_FILES['userfile']['size']) {
-                var_dump($_FILES['userfile']);
                 $fileContent = file_get_contents($_FILES['userfile']['tmp_name']);
                 $numbrer = mt_rand(1, 1000);
-                $fileLocation = $this->user->getName() . 'image' . $numbrer . '.png';
-                file_put_contents(getcwd() . '/images/' . $this->user->getName() . 'image' . $numbrer . '.png',
+                $fileLocation = $this->user['name'] . '_image' . $numbrer . '.png';
+                file_put_contents(getcwd() . '/images/' . '/posts/' . $this->user['name'] . '_image' . $numbrer . '.png',
                     $fileContent);
-                $message->setImage($fileLocation);
+                $post->image = $fileLocation;
             }
-
-            $message->addMessage();
+            $post->save();
             $this->redirect('/blog/index');
         }
     }
@@ -43,7 +42,8 @@ class Blog extends AbstractController
     public function deletePostAction()
     {
         if ($_REQUEST['post_id'] && in_array($_SESSION['id'], ADMIN_LIST)) {
-            Message::deleteMessageByPostId($_REQUEST['post_id']);
+            $post = Post::find($_REQUEST['post_id']);
+            $post->delete();
             $this->redirect('/blog/index');
         }
     }
@@ -52,7 +52,7 @@ class Blog extends AbstractController
     {
         header('Content-type: image/png');
         $sanitazePath = htmlspecialchars($_GET['filePath']);
-        $data = file_get_contents(getcwd() . '/images/' . $sanitazePath);
+        $data = file_get_contents(getcwd() . '/images/posts/' . $sanitazePath);
         echo $data;
     }
 

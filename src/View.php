@@ -30,7 +30,7 @@ class View
             $this->twig = new \Twig\Environment($loader, ['autoescape' => false]);
         }
 
-        return $this->twig->render($tpl, $data);
+        return $this->twig->render($tpl, $data + $this->data);
     }
 
 }

@@ -5,7 +5,7 @@
     Пароль: <input type="password" name="password"><br>
     Пароль ещё раз: <input type="password" name="passwordAgain"><br>
 
-    <input type="submit"  value="Зарегестрироваться">
+    <input type="submit" value="Зарегестрироваться">
 </form>
 <br>
 <br>
@@ -16,7 +16,6 @@
 </form>
 <br>
 <br>
-{# var_dump($this->error)  #}
-{% if this.error %}
-    <span style="color: red">this.error</span>
+{% if error %}
+    <span style="color: red">{{ error }}</span>
 {% endif %}

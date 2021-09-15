@@ -1,0 +1,20 @@
+<form enctype="multipart/form-data" action="/admin/updateProfile" method="post">
+    Имя: <input type="text" name="name" value="{{ user.name }}"><br>
+    Почта: <input type="text" name="email" value="{{ user.email }}"><br>
+    Пароль: <input type="password" name="password"><br>
+    Пароль ещё раз: <input type="password" name="passwordAgain"><br>
+    Прикрепить картинку:<br>
+    <input name="userfile" type="file"/><br>
+    <input type="hidden" name="user_id" value="{{ user.id }}">
+    <input type="submit" value="Update">
+</form>
+<form action="/admin/deleteUser" method="post">
+    <input type="hidden" name="user_id" value="{{ user.id }}">
+    <input type="submit" value="Удалить">
+</form>
+{% if user.avatar_image %}
+    <img src="../../images/avatars/{{ user.avatar_image }}">
+{% endif %}
+{% if error %}
+    <span style="color: red">{{ error }}</span>
+{% endif %}

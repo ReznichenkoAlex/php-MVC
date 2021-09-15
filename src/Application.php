@@ -4,7 +4,7 @@ namespace Base;
 
 use App\Controller\Blog;
 use App\Controller\User;
-use App\Model\User as UserModel;
+use App\Model\UserEloquent as UserModel;
 
 class Application
 {
@@ -49,7 +49,7 @@ class Application
     {
         $id = $_SESSION['id'] ?? null;
         if ($id){
-            $user = UserModel::getById($id);
+            $user = UserModel::query()->where('id', $id)->first()->toArray();
             if($user){
                 $this->controller->setUser($user);
             }
