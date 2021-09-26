@@ -9,7 +9,8 @@ class Api extends AbstractController
 {
     public function MessagesAction()
     {
-        if (isset($_REQUEST['id'])) {
+        $id = $_REQUEST['id'];
+        if ($id) {
             $messages = Post::query()
                 ->where('user_id', $_REQUEST['id'])
                 ->limit(20)->orderByDesc('id')

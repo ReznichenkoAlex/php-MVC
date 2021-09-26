@@ -26,7 +26,7 @@ class Application
             $this->initController();
             $this->initAction();
 
-            $view = new View();
+            $view = new ViewNative();
             $this->controller->setView(view: $view);
             $this->initUser();
 

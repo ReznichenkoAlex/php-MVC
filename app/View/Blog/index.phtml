@@ -1,5 +1,5 @@
 <div class="entry">
-    вошли как <?= $this->user->getName(); ?>
+    вошли как <?= $this->user['name']; ?>
     <form action="/user/logout">
         <input type="submit" value="Выйти">
     </form>
