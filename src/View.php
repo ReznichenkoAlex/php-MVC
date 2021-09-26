@@ -18,14 +18,6 @@ class View
         $this->data[$name] = $value;
     }
 
-    public function render(string $tpl, $data = []): string
-    {
-        $this->data += $data;
-        ob_start();
-        include $this->templatePath . DIRECTORY_SEPARATOR . $tpl;
-        return ob_get_clean();
-    }
-
     public function __get($varName)
     {
         return $this->data[$varName] ?? null;
@@ -38,7 +30,7 @@ class View
             $this->twig = new \Twig\Environment($loader, ['autoescape' => false]);
         }
 
-        return $this->twig->render($tpl, $data);
+        return $this->twig->render($tpl, $data + $this->data);
     }
 
 }

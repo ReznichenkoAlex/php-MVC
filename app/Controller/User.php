@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\User as UserModel;
+use App\Model\UserEloquent as UserModel;
 use Base\AbstractController;
 
 class User extends AbstractController
@@ -13,7 +13,7 @@ class User extends AbstractController
 
         if ($email) {
             $password = isset($_POST['password']) ? trim($_POST['password']) : null;
-            $user = UserModel::getByEmail($email);
+            $user = UserModel::query()->where('email', $email)->first()->toArray();
             $success = true;
             if (!$password) {
                 $this->view->assign('error', 'Введите пароль');
@@ -24,17 +24,15 @@ class User extends AbstractController
                     $this->view->assign('error', 'Неверный логин или пароль');
                 }
                 if ($user) {
-                    if ($user->getPassword() !== UserModel::getPasswordHash($password)) {
+                    if ($user['password'] !== UserModel::getPasswordHash($password)) {
                         $this->view->assign('error', 'Неверный логин или пароль');
                     } else {
-                        $_SESSION['id'] = $user->getId();
+                        $_SESSION['id'] = $user['id'];
                         $this->redirect('/blog/index');
                     }
                 }
             }
         }
-
-//        return $this->view->render('User/register.phtml');
         return $this->view->renderTwig('User/register.twig');
 
     }
@@ -75,28 +73,24 @@ class User extends AbstractController
             }
 
 
-            $user = UserModel::getByEmail($email);
+            $user = UserModel::query()->where('email', $email)->first();
             if($user){
                 $this->view->assign('error', 'Пользователь с такой почтой уже существует');
                 $success = false;
             }
-
             if ($success) {
-                $user = (new UserModel())
-                    ->setName($name)
-                    ->setEmail($email)
-                    ->setPassword(UserModel::getPasswordHash($password));
-
-                $user->save();
-
-                $_SESSION['id'] = $user->getId();
+                $userData = [
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => UserModel::getPasswordHash($password)
+                ];
+                $user = UserModel::create($userData)->toArray();
+                $_SESSION['id'] = $user['id'];
                 $this->setUser($user);
-
                 $this->redirect('/blog/index');
             }
         }
 
-//        return $this->view->render('User/register.phtml');
         return $this->view->renderTwig('User/register.twig');
 
 

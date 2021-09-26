@@ -1,8 +1,13 @@
 <div class="entry">
-    вошли как {{ user.getName }}
+    вошли как {{ user.name }}
     <form action="/user/logout">
         <input type="submit" value="Выйти">
     </form>
+    {% if user.id in AdminList %}
+        <form action="/admin/index">
+            <input type="submit" value="Админка">
+        </form>
+    {% endif %}
 </div>
 
 <br>
@@ -24,7 +29,7 @@
         <div class="message"> {{ message.text }}</div>
         {% if user.id in AdminList %}
             <form action="/blog/deletePost" method="post">
-                <input type="hidden" name="post_id" value=" message.id"><br>
+                <input type="hidden" name="post_id" value=" {{ message.id }}"><br>
                 <input type="submit" value="Удалить">
             </form>
         {% endif %}
