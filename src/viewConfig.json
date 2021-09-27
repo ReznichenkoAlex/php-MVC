@@ -1,0 +1,60 @@
+{
+  "errors": {
+    "api": {
+      "noMessages": "Этот пользователь не отправлял сообщения",
+      "userNotFound": "Пользователь не найден",
+      "notNumeric": "Введено не число"
+    },
+    "admin": {
+      "name": "Введите имя",
+      "email": "Введите почту",
+      "password": "Введите пароль",
+      "passwordAgain": "Введите пароль ещё раз",
+      "passwordsDontMatch": "Пароли не совпадают",
+      "oldAndNewPasswordsAreSame": "Новый пароль не должен совпадать со старым"
+    },
+    "blog": {
+
+    },
+    "user": {
+      "login": {
+        "inputPassword": "Введите пароль",
+        "incorrectLoginOrPassword": "Неверный логин или пароль"
+      },
+      "register": {
+        "inputName": "Введите имя",
+        "inputEmail": "Введите почту",
+        "inputPassword": "Введите пароль",
+        "inputPasswordAgain": "Введите пароль ещё раз",
+        "shortPasswordLength": "Длина пароля должна быть не менее 4 символов",
+        "passwordsMustMatch": "Пароли должны совпадать",
+        "EmailIsBusy": "Пользователь с такой почтой уже существует"
+      }
+    }
+  },
+  "endpoints": {
+      "blog": {
+        "index": "/blog/index"
+      },
+      "admin": {
+        "index": "/admin/index",
+        "profile": "/admin/profile"
+      },
+      "user": {
+        "register": "/user/register",
+        "login": "/user/login"
+      }
+  },
+  "views": {
+    "admin": {
+      "index": "Admin/index.twig",
+      "profile": "Admin/profile.twig"
+    },
+    "blog": {
+      "index": "Blog/index.twig"
+    },
+    "user": {
+      "register": "User/register.twig"
+    }
+  }
+}

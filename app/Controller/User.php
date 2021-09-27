@@ -16,24 +16,24 @@ class User extends AbstractController
             $user = UserModel::query()->where('email', $email)->first()->toArray();
             $success = true;
             if (!$password) {
-                $this->view->assign('error', 'Введите пароль');
+                $this->view->assign('error', SAMPLES['errors']['user']['login']['inputPassword']);
                 $success = false;
             }
             if ($success) {
                 if (!$user) {
-                    $this->view->assign('error', 'Неверный логин или пароль');
+                    $this->view->assign('error', SAMPLES['errors']['user']['login']['incorrectLoginOrPassword']);
                 }
                 if ($user) {
                     if ($user['password'] !== UserModel::getPasswordHash($password)) {
-                        $this->view->assign('error', 'Неверный логин или пароль');
+                        $this->view->assign('error', SAMPLES['errors']['user']['login']['incorrectLoginOrPassword']);
                     } else {
                         $_SESSION['id'] = $user['id'];
-                        $this->redirect('/blog/index');
+                        $this->redirect(SAMPLES['endpoints']['blog']['index']);
                     }
                 }
             }
         }
-        return $this->view->render('User/register.twig');
+        return $this->view->render(SAMPLES['views']['user']['register']);
 
     }
 
@@ -48,34 +48,34 @@ class User extends AbstractController
         if ($email) {
             $success = true;
             if (!$name) {
-                $this->view->assign('error', 'Введите имя');
+                $this->view->assign('error', SAMPLES['errors']['user']['register']['inputName']);
                 $success = false;
             }
             if (!$email) {
-                $this->view->assign('error', 'Введите почту');
+                $this->view->assign('error', SAMPLES['errors']['user']['register']['inputEmail']);
                 $success = false;
             }
             if (!$password) {
-                $this->view->assign('error', 'Введите пароль');
+                $this->view->assign('error', SAMPLES['errors']['user']['register']['inputPassword']);
                 $success = false;
             }
             if (!$passwordAgain ) {
-                $this->view->assign('error', 'Введите пароль ещё раз');
+                $this->view->assign('error', SAMPLES['errors']['user']['register']['inputPasswordAgain']);
                 $success = false;
             }
             if(strlen($password) < 4){
-                $this->view->assign('error', 'Длина пароля должна быть не менее 4 символов');
+                $this->view->assign('error', SAMPLES['errors']['user']['register']['shortPasswordLength']);
                 $success = false;
             }
             if($password !== $passwordAgain){
-                $this->view->assign('error', 'Пароли должны совпадать');
+                $this->view->assign('error', SAMPLES['errors']['user']['register']['passwordsMustMatch']);
                 $success = false;
             }
 
 
             $user = UserModel::query()->where('email', $email)->first();
             if($user){
-                $this->view->assign('error', 'Пользователь с такой почтой уже существует');
+                $this->view->assign('error', SAMPLES['errors']['user']['register']['EmailIsBusy']);
                 $success = false;
             }
             if ($success) {
@@ -87,11 +87,11 @@ class User extends AbstractController
                 $user = UserModel::create($userData)->toArray();
                 $_SESSION['id'] = $user['id'];
                 $this->setUser($user);
-                $this->redirect('/blog/index');
+                $this->redirect(SAMPLES['endpoints']['blog']['index']);
             }
         }
 
-        return $this->view->render('User/register.twig');
+        return $this->view->render(SAMPLES['views']['user']['register']);
 
 
     }
@@ -100,6 +100,6 @@ class User extends AbstractController
     {
         session_destroy();
 
-        $this->redirect('/user/login');
+        $this->redirect(SAMPLES['endpoints']['user']['login']);
     }
 }

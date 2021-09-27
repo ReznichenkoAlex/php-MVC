@@ -21,7 +21,9 @@
         <input type="submit" value="Send">
     </form>
 </div>
-
+{% if error %}
+    <span style="color: red">{{ error }}</span>
+{% endif %}
 
 {% for message in messages %}
     <div class="post">

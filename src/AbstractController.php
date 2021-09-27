@@ -13,7 +13,7 @@ abstract class AbstractController
 
     protected function redirect(string $url)
     {
-        throw new RedirectException($url);
+        header('Location: ' . $url);
     }
 
 
@@ -25,6 +25,11 @@ abstract class AbstractController
     public function setUser($user): void
     {
         $this->user = $user;
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->user['id'], ADMIN_LIST);
     }
 
 

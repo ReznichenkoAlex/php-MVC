@@ -10,21 +10,21 @@ class Api extends AbstractController
     public function MessagesAction()
     {
         $id = $_REQUEST['id'];
-        if ($id) {
+        if (is_numeric($id)) {
             $messages = Post::query()
-                ->where('user_id', $_REQUEST['id'])
+                ->where('user_id', $id)
                 ->limit(20)->orderByDesc('id')
                 ->get()
                 ->toArray();
             if(!$messages){
-                echo "Этот пользователь не отправлял сообщения";
+                echo SAMPLES['errors']['api']['noMessages'];
                 return;
             }
             $json = json_encode($messages);
             header("Content-Type: application/json");
             echo $json;
         } else {
-            echo "Пользователь не найден ";
+            echo SAMPLES['errors']['api']['notNumeric'];
         }
     }
 }
