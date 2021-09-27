@@ -26,17 +26,13 @@ class Application
             $this->initController();
             $this->initAction();
 
-            $view = new ViewNative();
+            $view = new ViewTwig();
             $this->controller->setView(view: $view);
             $this->initUser();
 
             $content = $this->controller->{$this->actionName}();
 
             echo $content;
-        }
-        catch (RedirectException $e)
-        {
-            header('Location: ' . $e->getUrl());
         }
         catch (RouteException $e)
         {

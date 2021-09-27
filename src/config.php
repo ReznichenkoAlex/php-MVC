@@ -9,4 +9,4 @@ const DB_PASSWORD = '';
 
 
 const ADMIN_LIST = [1, 8];
-
+define("SAMPLES", json_decode(file_get_contents('./src/viewConfig.json'), 1));

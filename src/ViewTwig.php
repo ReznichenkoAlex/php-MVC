@@ -2,7 +2,7 @@
 
 namespace Base;
 
-class View extends AbstractView
+class ViewTwig extends AbstractView
 {
     private $twig;
 
