@@ -13,7 +13,7 @@ class Blog extends AbstractController
             $this->redirect('/user/register');
         }
         $posts = Post::query()->limit(20)->orderByDesc('id')->get()->toArray();
-        return $this->view->renderTwig('Blog/index.twig',
+        return $this->view->render('Blog/index.phtml',
             ['user' => $this->user, 'messages' => $posts, 'AdminList' => ADMIN_LIST]);
     }
 
@@ -41,7 +41,8 @@ class Blog extends AbstractController
 
     public function deletePostAction()
     {
-        if ($_REQUEST['post_id'] && in_array($_SESSION['id'], ADMIN_LIST)) {
+        $post_id = $_REQUEST['post_id'];
+        if ($post_id && in_array($_SESSION['id'], ADMIN_LIST)) {
             $post = Post::find($_REQUEST['post_id']);
             $post->delete();
             $this->redirect('/blog/index');

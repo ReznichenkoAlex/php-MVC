@@ -33,7 +33,7 @@ class User extends AbstractController
                 }
             }
         }
-        return $this->view->renderTwig('User/register.twig');
+        return $this->view->render('User/register.twig');
 
     }
 
@@ -45,7 +45,7 @@ class User extends AbstractController
         $password = isset($_POST['password']) ? trim($_POST['password']) : null;
         $passwordAgain = isset($_POST['passwordAgain']) ? trim($_POST['passwordAgain']) : null;
 
-        if (isset($_POST['email'])) {
+        if ($email) {
             $success = true;
             if (!$name) {
                 $this->view->assign('error', 'Введите имя');
@@ -91,7 +91,7 @@ class User extends AbstractController
             }
         }
 
-        return $this->view->renderTwig('User/register.twig');
+        return $this->view->render('User/register.twig');
 
 
     }

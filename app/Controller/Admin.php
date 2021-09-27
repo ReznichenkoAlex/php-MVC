@@ -12,7 +12,7 @@ class Admin extends AbstractController
     {
         if (in_array($_SESSION['id'], ADMIN_LIST)) {
             $users = User::all()->toArray();
-            return $this->view->renderTwig('Admin/index.twig', ['users' => $users]);
+            return $this->view->render('Admin/index.twig', ['users' => $users]);
         } else {
             $this->redirect('/blog/index');
         }
@@ -24,7 +24,7 @@ class Admin extends AbstractController
             $user_id = isset($_GET['id']) ? (int)$_GET['id'] : null;
             if ($user_id) {
                 $user = User::query()->where('id', $user_id)->first()->toArray();
-                return $this->view->renderTwig('/Admin/profile.twig', ['user' => $user]);
+                return $this->view->render('/Admin/profile.twig', ['user' => $user]);
             }
         } else {
             $this->redirect('/blog/index');
@@ -77,7 +77,7 @@ class Admin extends AbstractController
                 $user->password = User::getPasswordHash($password);
                 $user->save();
             }
-            return $this->view->renderTwig('/Admin/profile.twig', ['user' => $user]);
+            return $this->view->render('/Admin/profile.twig', ['user' => $user]);
         } else {
             $this->redirect('/blog/index');
         }

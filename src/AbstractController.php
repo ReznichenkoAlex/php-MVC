@@ -6,7 +6,7 @@ use App\Model\User;
 
 abstract class AbstractController
 {
-    /** @var View */
+    /** @var AbstractView */
     protected $view;
     /** @var array  */
     protected $user;
@@ -17,7 +17,7 @@ abstract class AbstractController
     }
 
 
-    public function setView(View $view): void
+    public function setView(AbstractView $view): void
     {
         $this->view = $view;
     }
